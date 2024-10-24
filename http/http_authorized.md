@@ -112,6 +112,15 @@ curl --header "Authorization: Bearer token" http://localhost:8080/welcome
 curl -v --header "Authorization: Bearer token" http://localhost:8080/refresh
 ```
 
+### [示例](./example/jwt_for_email.ts)
+
+根据以上的描述，我们可以使用 JWT 的思路来实现一个简单的邮箱验证思路，其中最重要的就是签名时候对字符的处理，由于 `sign` 签名的函数生成的是乱码，我们不仅要将其转换成字符串还要转换一些特殊字符，才能作为查询字符串携带。
+
+```ts
+encodeURIComponent(
+    b64 + '.' + btoa(String.fromCharCode(...new Uint8Array(signature))))
+```
+
 ### 总结
 
 1. Session 是由服务器诞生并且保存在服务器中的，由服务器主导
